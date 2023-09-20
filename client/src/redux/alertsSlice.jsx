@@ -23,14 +23,19 @@ const reducer = (state, action) => {
   }
 };
  */
+
 export const alertsSlice = createSlice({
   name: "alerts",
   initialState: { loading: false },
-  reducer: {
-    showLoading: (state) => state.loading == true,
-    hideLoading: (state) => state.loading == false,
+  reducers: {
+    showLoading: (state) => {
+      state.loading = true;
+    },
+    hideLoading: (state) => {
+      state.loading = false;
+    },
   },
 });
 
-export const { showLoading, hideLoading } = createSlice.actions;
+export const { showLoading, hideLoading } = alertsSlice.actions;
 export default alertsSlice.reducer;

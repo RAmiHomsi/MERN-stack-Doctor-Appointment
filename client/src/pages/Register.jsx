@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { showLoading, hideLoading } from "../redux/alertsSlice";
 
 export default function Register() {
   const [name, setUsername] = useState("");
@@ -8,17 +10,21 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [redirect, setRedirect] = useState(false);
 
+  const dispatch = useDispatch();
+
   async function registerUser(ev) {
     ev.preventDefault();
     try {
+      dispatch(showLoading());
       await axios.post("http://localhost:8000/user/register", {
         name,
         email,
         password,
       });
+      dispatch(hideLoading());
       setRedirect(true);
-      alert("User registration successful");
     } catch (error) {
+      dispatch(hideLoading());
       alert("User registration failed");
     }
   }
